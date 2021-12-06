@@ -1,12 +1,24 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import Home from './home';
 import db from "../firebase";
 
-function SignIn() {
 
+export function useAuth() {
+    const [currentUser, setCurrentUser] = useState();
+
+    useEffect(() => {
+        const unsub = onAuthStateChanged(auth, user => setCurrentUser(user));
+        return unsub;
+    }, [])
+    return currentUser;
+}
+
+function SignIn() {
+    const currentUser = useAuth();
+    const [loading, setLoading] = useState(false);
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
 
@@ -43,7 +55,7 @@ function SignIn() {
                         }}
                     /><br />
 
-                    <button className="btn btn-outline-dark " onClick={login} > Login</button>
+                    <button className="btn btn-outline-dark " disabled={loading || currentUser} onClick={login} > Login</button>
 
                     <button className=" btn btn-outline-dark " style={{ float: 'right' }} onClick={logout}> Sign Out </button>
                 </form>

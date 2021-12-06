@@ -1,11 +1,18 @@
 import React from "react";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import db, { auth } from "../firebase";
-import { Link } from "react-router-dom";
-import SignIn from "./signIn";
 
+export function useAuth() {
+    const [currentUser, setCurrentUser] = useState();
 
+    useEffect(() => {
+        const unsub = onAuthStateChanged(auth, user => setCurrentUser(user));
+        return unsub;
+    }, [])
+
+    return currentUser;
+}
 const SignUp = () => {
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
@@ -13,6 +20,9 @@ const SignUp = () => {
     const [phone, setPhone] = useState('');
     const [password, setPsw] = useState('');
     const [passwordRetry, setPswRetry] = useState('');
+    const [loading, setLoading] = useState(false);
+    const currentUser = useAuth();
+
 
     const [user, setUser] = useState({});
     onAuthStateChanged(auth, (currentUser) => {
@@ -37,6 +47,22 @@ const SignUp = () => {
 
         }
     };
+    function renderData(doc) {
+        //let name = document.createElement('span');
+        //name.textContent = doc.data().name;
+        alert(doc.data().name)
+
+    }
+    const show = () => {
+        db.collection('users').get().then((snapshot) => {
+            snapshot.docs.forEach(doc => {
+                renderData(doc);
+
+            });
+        }
+        )
+    }
+
     return (
 
         <div className="container">
@@ -63,14 +89,10 @@ const SignUp = () => {
                         <input type="password" className="form-control" placeholder="Retry password" value={passwordRetry} onChange={(e) => setPswRetry(e.target.value)} />
                     </div>
 
-                    <button type="submit" onClick={add} className="btn btn-outline-dark" >Kaydol</button>
-
+                    <button type="submit" disabled={loading || currentUser} onClick={add} className="btn btn-outline-dark" >Kaydol</button>
 
                 </form>
-
-
             </div>
-
         </div>
     );
 
