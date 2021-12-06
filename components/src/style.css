@@ -1,0 +1,12 @@
+*{margin: 0;}  
+footer{position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;}
+    
+    .card{width: 50%;
+    margin: 8% 28%;
+border-color:15px solid tomato;}
