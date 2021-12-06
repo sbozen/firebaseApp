@@ -6,9 +6,9 @@ function header() {
     return (
         <div className="header">
 
-            <Link to={'/'} className="nav-link"> home</Link>
-            <Link to={'/signIn'} className="nav-link"> in</Link>
-            <Link to={'/signUp'} className="nav-link">up</Link>
+            <Link to={'/'} className="nav-link" style={{ float: 'left' }}> Anasayfa</Link>
+            <Link to={'/signIn'} className="nav-link"> Giriş Yap</Link>
+            <Link to={'/signUp'} className="nav-link">Kaydol</Link>
         </div>
     )
 }

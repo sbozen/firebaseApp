@@ -34,7 +34,14 @@ function Home() {
             ));
 
     }, []);
+    useEffect(() => {
+        auth.onAuthStateChanged((authUser) => {
+            if (authUser) {
+                setUser(authUser);
+            } else { setUser(null); }
+        });
 
+    }, [])
 
     return (
         <div>

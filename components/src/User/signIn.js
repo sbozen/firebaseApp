@@ -1,27 +1,26 @@
 import React from 'react';
 import { useState } from 'react';
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import Home from './home';
 import db from "../firebase";
 
 function SignIn() {
-    const [mail, setMail] = useState('');
-    const [password, setPsw] = useState('');
+
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
 
 
-    const login = () => {
+    const login = (e) => {
+        e.preventDefault();
         try {
-            const user = signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+            const user = signInWithEmailAndPassword(auth, loginEmail, loginPassword)
+            console.log(user)
 
         } catch (error) {
             console.log(error.message);
         };
 
-        var a = db.collection('users');
-        console.log(a);
 
     };
 
@@ -31,23 +30,26 @@ function SignIn() {
 
     return (
         <div>
-            <form>
-                <h4> Giriş Yap </h4>
-                aaa <input type="email" className="form-control" placeholder="Email..." onChange={(event) => {
-                    setLoginEmail(event.target.value);
-                }}
-                />
-                <input type="password" className="form-control"
-                    placeholder="Password..." onChange={(event) => {
-                        setLoginPassword(event.target.value);
+            <div className="card">
+                <form>
+                    <h4> Giriş Yap </h4>
+                    <input type="email" className="form-control" placeholder="Email" onChange={(event) => {
+                        setLoginEmail(event.target.value);
                     }}
-                />
+                    />
+                    <input type="password" className="form-control"
+                        placeholder="Password" onChange={(event) => {
+                            setLoginPassword(event.target.value);
+                        }}
+                    /><br />
 
-                <button class="btn btn-outline-success" onClick={login}> Login</button>
+                    <button className="btn btn-outline-dark " onClick={login} > Login</button>
 
-                <button onClick={logout}> Sign Out </button>
-            </form>
-        </div>
+                    <button className=" btn btn-outline-dark " style={{ float: 'right' }} onClick={logout}> Sign Out </button>
+                </form>
+
+            </div>
+        </div >
     )
 };
 

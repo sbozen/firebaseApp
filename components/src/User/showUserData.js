@@ -10,7 +10,7 @@ function showUserData(props) {
                 <small>  User Logged In: {props.data}  </small>
             </footer>
         </div>
-    ) 
- 
+    )
+
 }
 export default showUserData;

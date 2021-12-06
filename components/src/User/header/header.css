@@ -8,13 +8,14 @@ body {
 .header {
   overflow: hidden;
   background-color: #f1f1f1;
-  padding: 20px 10px;
+  padding: 20px 10px;  
+  border: 1px solid #fff; 
+  box-shadow: 0 0 8px 0 #888888;
 }
 
-.header a {
-  float: left;
-  color: black;
-  text-align: center;
+.header :link {
+  float: right;
+  text-align: right ;
   padding: 12px;
   text-decoration: none;
   font-size: 18px; 
@@ -22,10 +23,6 @@ body {
   border-radius: 4px;
 }
 
-.header a.logo {
-  font-size: 25px;
-  font-weight: bold;
-}
 
 .header a:hover {
   background-color: #ddd;
